@@ -17,11 +17,13 @@ class AssetsManagement{
 	function __construct(){
 		add_action("plugins_loaded", [$this, "load_textdomain"]);
 		add_action("wp_enqueue_scripts", [$this, "load_public_assets"]);
+		add_action("wp_enqueue_scripts", [$this, "myplugin_inline_style_public"]);
 		add_action("admin_enqueue_scripts", [$this, "load_admin_assets"]);
+		add_action("login_enqueue_scripts", [$this, "myplugin_enqueue_style_login"]);
 		add_action("init", [$this, "assetsm_init"]);
 	}
 
-	
+
 
 	/**
 	 * Assets loading dependencies
@@ -105,7 +107,6 @@ class AssetsManagement{
 		$js = 'alert("Hello world!");';
 		wp_add_inline_script( 'myplugin-public', $js );
 	}
-	add_action( 'wp_enqueue_scripts', 'myplugin_inline_style_public' );
 
 
 
@@ -116,7 +117,6 @@ class AssetsManagement{
 
 		wp_enqueue_style( 'myplugin-login', plugin_dir_url( __FILE__ ) .'PATH', array(), null, 'all' );
 	}
-	add_action( 'login_enqueue_scripts', 'myplugin_enqueue_style_login' );
 
 
 
